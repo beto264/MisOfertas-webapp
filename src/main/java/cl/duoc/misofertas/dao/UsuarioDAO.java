@@ -110,6 +110,10 @@ public final class UsuarioDAO {
             usuarioDTO.setPassword(rs.getString("password"));
             usuarioDTO.setRol(rs.getString("rol"));
             usuarioDTO.setNombre(rs.getString("nombre"));
+            usuarioDTO.setApellido(rs.getString("apellido"));
+            usuarioDTO.setFono(rs.getString("fono"));
+            usuarioDTO.setDireccion(rs.getString("direccion"));
+            usuarioDTO.setRut(rs.getString("rut"));
         }
 
         return usuarioDTO;
