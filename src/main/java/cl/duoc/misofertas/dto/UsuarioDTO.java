@@ -137,7 +137,7 @@ public class UsuarioDTO implements Serializable {
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre + " " + apellido;
     }
 
     public void setNombre(String nombre) {

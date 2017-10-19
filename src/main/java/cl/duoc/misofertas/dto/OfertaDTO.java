@@ -21,6 +21,8 @@ public class OfertaDTO {
     private String imagen;
     private String rutPublicador;
     private ProductoDTO productoDTO;
+    private String visitas;
+    private String valoraciones;
 
     public OfertaDTO() {
     }
@@ -35,6 +37,24 @@ public class OfertaDTO {
         this.rutPublicador = rutPublicador;
     }
 
+    public String getVisitas() {
+        return visitas;
+    }
+
+    public void setVisitas(String visitas) {
+        this.visitas = visitas;
+    }
+
+    public String getValoraciones() {
+        return valoraciones;
+    }
+
+    public void setValoraciones(String valoraciones) {
+        this.valoraciones = valoraciones;
+    }
+
+    
+    
     public String getIdOferta() {
         return idOferta;
     }
@@ -101,8 +121,10 @@ public class OfertaDTO {
 
     @Override
     public String toString() {
-        return "OfertaDTO{" + "idOferta=" + idOferta + ", idProducto=" + idProducto + ", descripcion=" + descripcion + ", descuento=" + descuento + ", valorFinal=" + valorFinal + ", imagen=" + imagen + ", rutPublicador=" + rutPublicador + '}';
+        return "OfertaDTO{" + "idOferta=" + idOferta + ", idProducto=" + idProducto + ", descripcion=" + descripcion + ", descuento=" + descuento + ", valorFinal=" + valorFinal + ", imagen=" + imagen + ", rutPublicador=" + rutPublicador + ", productoDTO=" + productoDTO + ", visitas=" + visitas + ", valoraciones=" + valoraciones + '}';
     }
+
+    
 
     @Override
     public int hashCode() {

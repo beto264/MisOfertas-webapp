@@ -16,6 +16,18 @@
         <servlet-name>Home</servlet-name>
         <servlet-class>cl.duoc.misofertas.controller.Home</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Valoraciones</servlet-name>
+        <servlet-class>cl.duoc.misofertas.controller.Valoraciones</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Perfil</servlet-name>
+        <servlet-class>cl.duoc.misofertas.controller.Perfil</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Oferta</servlet-name>
+        <servlet-class>cl.duoc.misofertas.controller.Oferta</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -30,7 +42,19 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
-        <url-pattern>/Home</url-pattern>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Valoraciones</servlet-name>
+        <url-pattern>/valoraciones</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Perfil</servlet-name>
+        <url-pattern>/perfil</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Oferta</servlet-name>
+        <url-pattern>/oferta</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

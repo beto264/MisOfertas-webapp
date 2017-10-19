@@ -12,7 +12,25 @@ package cl.duoc.misofertas.dto;
 public class ProductoDTO {
     
     private String nombre;
+    private String descripcion;
+    private RubroDTO rubro;
 
+    public RubroDTO getRubro() {
+        return rubro;
+    }
+
+    public void setRubro(RubroDTO rubro) {
+        this.rubro = rubro;
+    }
+    
+    public String getDescripcion(){
+        return descripcion;
+    }
+    
+    public void setDescripcion(String descripcion){
+        this.descripcion = descripcion;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -20,4 +38,11 @@ public class ProductoDTO {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    @Override
+    public String toString() {
+        return "ProductoDTO{" + "nombre=" + nombre + ", descripcion=" + descripcion + ", rubro=" + rubro + '}';
+    }
+    
+    
 }
