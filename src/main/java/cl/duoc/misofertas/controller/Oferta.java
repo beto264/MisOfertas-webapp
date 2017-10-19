@@ -7,25 +7,22 @@ package cl.duoc.misofertas.controller;
 
 import cl.duoc.misofertas.dao.OfertaDAO;
 import cl.duoc.misofertas.dto.OfertaDTO;
-import cl.duoc.misofertas.utils.Roles;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.jboss.logging.Logger;
 
 /**
  *
  * @author Beto
  */
-public class Home extends HttpServlet {
-    
-    private static final Logger logger = Logger.getLogger(Home.class);
+public class Oferta extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,35 +35,19 @@ public class Home extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //el rol y el usuario está almacenado en variables de sesión, por lo tanto un redireccionamiento a otro jsp no alterará estos parámetros
-        //acá debemos chequear el rol para saber si pinchamos la bd trayendo las ofertas o no
-        HttpSession session = request.getSession();
-
-        String rol = (String) session.getAttribute("rol");
-
-        OfertaDAO ofertaDAO = new OfertaDAO();
-        List<OfertaDTO> ofertas = null;
-
-        if (rol.equalsIgnoreCase(Roles.Consumidor.name())) {
-            try {
-                //cargamos las ofertas
-                ofertas = ofertaDAO.getAll();
-                
-//                for (OfertaDTO oferta : ofertas) {
-//                    logger.info(oferta.toString());
-//                }
-                
-                
-                session.setAttribute("ofertas", ofertas);
-            } catch (SQLException ex) {
-                request.setAttribute("error", ex.getMessage());
-            }
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Oferta</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Oferta at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
-        session.setAttribute("rol", rol);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -81,7 +62,26 @@ public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        HttpSession session = request.getSession();
+        
+        String id = request.getParameter("id");
+        //actualizar visualización de la oferta
+
+        OfertaDTO ofertaDTO = null;
+
+        OfertaDAO ofertaDAO = new OfertaDAO();
+        try {
+            ofertaDTO = ofertaDAO.getOfertaById(id);
+            String visitasActuales =ofertaDTO.getVisitas();
+            int visitas = Integer.valueOf(visitasActuales) + 1;
+            ofertaDAO.addVisita(id, String.valueOf(visitas));
+        } catch (Exception ex) {
+            Logger.getLogger(Oferta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        session.setAttribute("oferta", ofertaDTO);
+        request.getRequestDispatcher("oferta.jsp").forward(request, response);
     }
 
     /**

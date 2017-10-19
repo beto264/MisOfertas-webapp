@@ -5,27 +5,18 @@
  */
 package cl.duoc.misofertas.controller;
 
-import cl.duoc.misofertas.dao.OfertaDAO;
-import cl.duoc.misofertas.dto.OfertaDTO;
-import cl.duoc.misofertas.utils.Roles;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.jboss.logging.Logger;
 
 /**
  *
  * @author Beto
  */
-public class Home extends HttpServlet {
-    
-    private static final Logger logger = Logger.getLogger(Home.class);
+public class Perfil extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,35 +29,7 @@ public class Home extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //el rol y el usuario está almacenado en variables de sesión, por lo tanto un redireccionamiento a otro jsp no alterará estos parámetros
-        //acá debemos chequear el rol para saber si pinchamos la bd trayendo las ofertas o no
-        HttpSession session = request.getSession();
-
-        String rol = (String) session.getAttribute("rol");
-
-        OfertaDAO ofertaDAO = new OfertaDAO();
-        List<OfertaDTO> ofertas = null;
-
-        if (rol.equalsIgnoreCase(Roles.Consumidor.name())) {
-            try {
-                //cargamos las ofertas
-                ofertas = ofertaDAO.getAll();
-                
-//                for (OfertaDTO oferta : ofertas) {
-//                    logger.info(oferta.toString());
-//                }
-                
-                
-                session.setAttribute("ofertas", ofertas);
-            } catch (SQLException ex) {
-                request.setAttribute("error", ex.getMessage());
-            }
-        }
-
-        session.setAttribute("rol", rol);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
-
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -81,7 +44,9 @@ public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         
+        request.getRequestDispatcher("perfil.jsp").forward(request, response);
+        
     }
 
     /**
@@ -95,7 +60,11 @@ public class Home extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+          
+        
+        //actualizar perfil
+        request.getRequestDispatcher("perfil.jsp").forward(request, response);
+        
     }
 
     /**

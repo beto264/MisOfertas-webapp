@@ -89,6 +89,12 @@ public class Login extends HttpServlet {
         try {
             isValidUser = usuarioDAO.validUser(usuarioDTO);
             usuarioDTO = usuarioDAO.getUserByEmail(usuarioDTO.getUsername());
+            
+            //acá traer las valoraciones realizadas por el usuario
+            //las visualizaciones totales
+            //los puntos acumulados
+            
+            
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("error", ex.getMessage());
@@ -100,9 +106,9 @@ public class Login extends HttpServlet {
                 request.setAttribute("error",  Constants.NO_POSEE_PERMISOS_USUARIO);
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
-                sesion.setAttribute("usuario", usuarioDTO.getNombre());
+                sesion.setAttribute("usuario", usuarioDTO);
                 sesion.setAttribute("rol", usuarioDTO.getRol());
-                request.getRequestDispatcher("Home").forward(request, response);
+                request.getRequestDispatcher("home").forward(request, response);
             }
         } else {
             request.setAttribute("error", Constants.DATOS_INVALIDOS_USUARIO);
