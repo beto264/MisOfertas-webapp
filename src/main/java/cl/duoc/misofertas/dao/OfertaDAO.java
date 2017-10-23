@@ -10,11 +10,15 @@ import cl.duoc.misofertas.db.DBConnection;
 import cl.duoc.misofertas.dto.OfertaDTO;
 import cl.duoc.misofertas.dto.ProductoDTO;
 import cl.duoc.misofertas.dto.RubroDTO;
+import cl.duoc.misofertas.dto.TiendaDTO;
+import cl.duoc.misofertas.dto.UsuarioDTO;
+import cl.duoc.misofertas.utils.StringUtil;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -52,6 +56,10 @@ public class OfertaDAO {
             ofertaDTO.setDescuento(rs.getString("descuento"));
             ofertaDTO.setDescripcion(rs.getString("descripcion_oferta"));
             ofertaDTO.setImagen(rs.getString("imagen"));
+            
+            //String valorFinal = (String ) rs.getString("valor_final");
+            //ofertaDTO.setValorFinal(StringUtil.separarMiles(valorFinal));
+            
             ofertaDTO.setValorFinal(rs.getString("valor_final"));
             ofertaDTO.setRutPublicador(rs.getString("rut_publicador"));
             ofertaDTO.setVisitas(rs.getString("visitas_oferta"));
@@ -62,6 +70,7 @@ public class OfertaDAO {
 
             ProductoDTO productoDTO = new ProductoDTO();
             productoDTO.setNombre(rs.getString("producto"));
+            productoDTO.setValor(rs.getString("valor_producto"));
             productoDTO.setDescripcion(rs.getString("descripcion_producto"));
             productoDTO.setRubro(rubroDTO);
 
@@ -81,10 +90,15 @@ public class OfertaDAO {
 
         Connection con = new DBConnection().connect();
 
-        PreparedStatement ps = con.prepareStatement("select * from oferta where id_oferta = ? ");
-        ps.setString(1, id);
+        String sp = "{call get_oferta_by_id(?, ?)}";
 
-        ResultSet rs = ps.executeQuery();
+        CallableStatement cs = con.prepareCall(sp);
+        cs.setString(1,  id);
+        cs.registerOutParameter(2, OracleTypes.CURSOR);
+
+        cs.executeUpdate();
+
+        ResultSet rs = rs = (ResultSet) cs.getObject(2);
 
         OfertaDTO ofertaDTO = null;
         while (rs.next()) {
@@ -94,12 +108,50 @@ public class OfertaDAO {
             ofertaDTO.setDescuento(rs.getString("descuento"));
             ofertaDTO.setDescripcion(rs.getString("descripcion"));
             ofertaDTO.setImagen(rs.getString("imagen"));
+            
+            //DecimalFormat decimalFormat = new DecimalFormat("#.###");
+            //String valorfinal = decimalFormat.format(rs.getString("valor_final"));
+            
             ofertaDTO.setValorFinal(rs.getString("valor_final"));
+            
             ofertaDTO.setRutPublicador(rs.getString("rut_publicador"));
             ofertaDTO.setVisitas(rs.getString("numero_visitas"));
+            ofertaDTO.setValoraciones(rs.getString("valoraciones"));
+            
+            UsuarioDTO publicador = new UsuarioDTO();
+            publicador.setNombre(rs.getString("nombre_publicador"));
+            publicador.setApellido(rs.getString("apellido_publicador"));
+            ofertaDTO.setPublicador(publicador);
+            
         }
 
         return ofertaDTO;
+    }
+    
+     public List<TiendaDTO> getTiendasByOferta(String idOferta) throws SQLException {
+
+        Connection con = new DBConnection().connect();
+        List<TiendaDTO> tiendas = new ArrayList<>();
+        
+        String sp = "{call get_tiendas_by_oferta(?, ?)}";
+
+        CallableStatement cs = con.prepareCall(sp);
+        cs.setString(1, idOferta);
+        cs.registerOutParameter(2, OracleTypes.CURSOR);
+
+        cs.executeUpdate();
+
+        ResultSet rs = rs = (ResultSet) cs.getObject(2);
+
+        TiendaDTO tiendaDTO = null;
+        while (rs.next()) {
+            tiendaDTO = new TiendaDTO();
+            tiendaDTO.setNombre(rs.getString("nombre"));
+             tiendaDTO.setDireccion(rs.getString("direccion"));
+            tiendas.add(tiendaDTO);
+        }
+
+        return tiendas;
     }
     
     public int addVisita(String id, String conteoVisita) throws SQLException{
@@ -119,9 +171,9 @@ public class OfertaDAO {
     public static void main(String[] args) {
         OfertaDAO o = new OfertaDAO();
         try {
-            List<OfertaDTO> ofertas = o.getAll();
-            for (OfertaDTO oferta : ofertas) {
-                         System.out.println(oferta);   
+            List<TiendaDTO> tiendas = o.getTiendasByOferta("1");
+            for (TiendaDTO tienda : tiendas) {
+                         System.out.println(tienda);   
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
