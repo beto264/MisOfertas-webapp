@@ -10,9 +10,10 @@ package cl.duoc.misofertas.dto;
  * @author Beto
  */
 public class ProductoDTO {
-    
+
     private String nombre;
     private String descripcion;
+    private String valor;
     private RubroDTO rubro;
 
     public RubroDTO getRubro() {
@@ -22,15 +23,15 @@ public class ProductoDTO {
     public void setRubro(RubroDTO rubro) {
         this.rubro = rubro;
     }
-    
-    public String getDescripcion(){
+
+    public String getDescripcion() {
         return descripcion;
     }
-    
-    public void setDescripcion(String descripcion){
+
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -39,10 +40,17 @@ public class ProductoDTO {
         this.nombre = nombre;
     }
 
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+
     @Override
     public String toString() {
-        return "ProductoDTO{" + "nombre=" + nombre + ", descripcion=" + descripcion + ", rubro=" + rubro + '}';
+        return "ProductoDTO{" + "nombre=" + nombre + ", descripcion=" + descripcion + ", valor=" + valor + ", rubro=" + rubro + '}';
     }
-    
-    
+
 }

@@ -5,6 +5,8 @@
  */
 package cl.duoc.misofertas.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -23,19 +25,26 @@ public class OfertaDTO {
     private ProductoDTO productoDTO;
     private String visitas;
     private String valoraciones;
+    private List<TiendaDTO> tiendas;
+    private UsuarioDTO publicador;
 
     public OfertaDTO() {
     }
 
-    public OfertaDTO(String idOferta, String idProducto, String descripcion, String descuento, String valorFinal, String imagen, String rutPublicador) {
-        this.idOferta = idOferta;
-        this.idProducto = idProducto;
-        this.descripcion = descripcion;
-        this.descuento = descuento;
-        this.valorFinal = valorFinal;
-        this.imagen = imagen;
-        this.rutPublicador = rutPublicador;
+    
+
+    public List<TiendaDTO> getTiendas() {
+        if (tiendas == null) {
+            tiendas = new ArrayList<>();
+        }
+        return tiendas;
     }
+
+    public void setTiendas(List<TiendaDTO> tiendas) {
+        this.tiendas = tiendas;
+    }
+    
+    
 
     public String getVisitas() {
         return visitas;
@@ -119,23 +128,29 @@ public class OfertaDTO {
         this.productoDTO = productoDTO;
     }
 
-    @Override
-    public String toString() {
-        return "OfertaDTO{" + "idOferta=" + idOferta + ", idProducto=" + idProducto + ", descripcion=" + descripcion + ", descuento=" + descuento + ", valorFinal=" + valorFinal + ", imagen=" + imagen + ", rutPublicador=" + rutPublicador + ", productoDTO=" + productoDTO + ", visitas=" + visitas + ", valoraciones=" + valoraciones + '}';
+    public UsuarioDTO getPublicador() {
+        return publicador;
     }
 
-    
+    public void setPublicador(UsuarioDTO publicador) {
+        this.publicador = publicador;
+    }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.idOferta);
-        hash = 37 * hash + Objects.hashCode(this.idProducto);
-        hash = 37 * hash + Objects.hashCode(this.descripcion);
-        hash = 37 * hash + Objects.hashCode(this.descuento);
-        hash = 37 * hash + Objects.hashCode(this.valorFinal);
-        hash = 37 * hash + Objects.hashCode(this.imagen);
-        hash = 37 * hash + Objects.hashCode(this.rutPublicador);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.idOferta);
+        hash = 97 * hash + Objects.hashCode(this.idProducto);
+        hash = 97 * hash + Objects.hashCode(this.descripcion);
+        hash = 97 * hash + Objects.hashCode(this.descuento);
+        hash = 97 * hash + Objects.hashCode(this.valorFinal);
+        hash = 97 * hash + Objects.hashCode(this.imagen);
+        hash = 97 * hash + Objects.hashCode(this.rutPublicador);
+        hash = 97 * hash + Objects.hashCode(this.productoDTO);
+        hash = 97 * hash + Objects.hashCode(this.visitas);
+        hash = 97 * hash + Objects.hashCode(this.valoraciones);
+        hash = 97 * hash + Objects.hashCode(this.tiendas);
+        hash = 97 * hash + Objects.hashCode(this.publicador);
         return hash;
     }
 
@@ -172,8 +187,27 @@ public class OfertaDTO {
         if (!Objects.equals(this.rutPublicador, other.rutPublicador)) {
             return false;
         }
+        if (!Objects.equals(this.visitas, other.visitas)) {
+            return false;
+        }
+        if (!Objects.equals(this.valoraciones, other.valoraciones)) {
+            return false;
+        }
+        if (!Objects.equals(this.productoDTO, other.productoDTO)) {
+            return false;
+        }
+        if (!Objects.equals(this.tiendas, other.tiendas)) {
+            return false;
+        }
+        if (!Objects.equals(this.publicador, other.publicador)) {
+            return false;
+        }
         return true;
     }
-    
+
+    @Override
+    public String toString() {
+        return "OfertaDTO{" + "idOferta=" + idOferta + ", idProducto=" + idProducto + ", descripcion=" + descripcion + ", descuento=" + descuento + ", valorFinal=" + valorFinal + ", imagen=" + imagen + ", rutPublicador=" + rutPublicador + ", productoDTO=" + productoDTO + ", visitas=" + visitas + ", valoraciones=" + valoraciones + ", tiendas=" + tiendas + ", publicador=" + publicador + '}';
+    }    
     
 }
