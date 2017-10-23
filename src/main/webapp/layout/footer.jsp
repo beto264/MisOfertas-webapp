@@ -4,7 +4,16 @@
 <script src="js/jquery.elevateZoom-3.0.8.min.js"></script>
 
 
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwCJwc27SDv8JI_WXk2FUdco_ca5pwx3E&callback=initMap">
+</script>
+
 <script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.collapsible').collapsible();
+    });
 
     $(document).ready(function () {
         $('select').material_select();
@@ -30,7 +39,59 @@
         }
         );
     });
+
+    $('[data-click]').on('click', function (e) {
+        initMap();
+    });
+    
+    
+
 </script>
+
+  <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 16,
+                // center: latLng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            var bounds = new google.maps.LatLngBounds();
+
+        <c:forEach var="element" items="${tiendas}" varStatus="status">
+            var latLng = new google.maps.LatLng(<c:out value="${element.latitud}"/>, <c:out value="${element.longitud}"/>);
+
+            bounds.extend(latLng);
+
+            var windowDialog = new google.maps.InfoWindow({
+                content: "content display dialog"
+            });
+
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                animation: google.maps.Animation.DROP,
+            });
+
+            marker.addListener('click', toggleBounce);
+
+            function toggleBounce() {
+                if (marker.getAnimation() !== null) {
+                    marker.setAnimation(null);
+                } else {
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                }
+            }
+            google.maps.event.addListener(marker, 'click', function () {
+                window.location.href = 'https://www.google.com/maps/search/?api=1&query=<c:out value="${element.latitud}"/>,<c:out value="${element.longitud}"/>';
+            });
+
+        </c:forEach>
+
+            map.fitBounds(bounds);
+        }
+
+    </script>
 
 <footer class="page-footer">
     <div class="container">

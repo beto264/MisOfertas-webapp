@@ -48,9 +48,8 @@
                                 </div>
                                 <div class="card-stacked">
                                     <div class="card-content">
-                                        <p>${element.descripcion}</p>
-                                        <hr>
-                                        <p><b>Valor final: $${element.valorFinal}</b></p>
+                                        <p><del>Antes:  $${element.productoDTO.valor}</del></p>
+                                        <h5><b>Ahora: $${element.valorFinal}</b></h5>
                                         <p>&nbsp;</p>
                                         <p>&nbsp;</p>
                                         <p>&nbsp;</p>

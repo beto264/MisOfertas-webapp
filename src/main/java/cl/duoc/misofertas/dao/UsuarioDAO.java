@@ -94,6 +94,21 @@ public final class UsuarioDAO {
 
         return exists;
     }
+    
+    public boolean update(String correo, String rut) throws SQLException {
+
+        boolean exists = false;
+
+        PreparedStatement ps = con.prepareStatement("select * from usuario where correo = ? or rut = ?");
+        ps.setString(1, correo);
+        ps.setString(2, rut);
+        ResultSet rs = ps.executeQuery();
+        if (rs.isBeforeFirst()) {
+            exists = true;
+        }
+
+        return exists;
+    }
 
     //Modificar más adelante
     public UsuarioDTO getUserByEmail(String correo) throws SQLException {

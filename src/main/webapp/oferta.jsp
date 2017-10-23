@@ -43,78 +43,107 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col  s6 m6">
-            <div  class="card">
-                <!--<figure class="card-profile-image">
-                   <i class="large material-icons">account_circle</i>
-                </figure>-->
-                <div class="card-content">
 
-                    <!--<p>${productoDTO.rubro.nombre}</p>
-                    <h4 class="header">${productoDTO.nombre}</h4>-->
-
-                    <div class="card-stacked">
-                        <div class="card-content">
-                            <p>Datos de la tienda acá</p>
-                            <hr>
-                            <p>Descuento: $${oferta.descuento}</p>
-                            <p>Valor final: $${oferta.valorFinal}</p>
-                            <p>Visualizaciones: ${oferta.visitas}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-
-        <div  class="card s12 m12">
-
-            <!--/ profile-page-wall-share -->
             <div class="card">
                 <div class="card-content">
                     <div class="row">
                         <form action="valoraciones" method="get">
-                            <div class="input-field col l4">
-                                <select name="nota">
-                                    <option value="" disabled selected></option>
-                                    <option value="Mala">Mala</option>
+                            <span class="card-title">Califica esta oferta</span>
+                            <br>
+                            <div class="input-field col s3 m3">
+                                <select name="nota" required>
+                                    <option value="Excelente"  selected>Excelente</option>
                                     <option value="Buena">Buena</option>
-                                    <option value="Excelente">Excelente</option>
+                                    <option value="Mala">Mala</option>
                                 </select>
-                                <label>Dale una puntuación</label>
+                                <label>Nota</label>
                             </div>
-                            <div class="file-field input-field col l4">
+                            <div class="file-field input-field col s9 m9">
                                 <div class="btn">
                                     <span>Boleta</span>
-                                    <input type="file">
+                                    <input type="file" required oninvalid="this.setCustomValidity('Debes adjuntar una fotografía de la boleta')"
+                                           oninput="setCustomValidity('')">
                                 </div>
                                 <div class="file-path-wrapper">
                                     <input class="file-path validate" type="text" name="image">
                                 </div>
                             </div>
-                            <div class="field input-field col l1 offset-l1">
-                                <input type="submit" class="btn" value="Enviar valoración">
-                            </div>
                             <input type="hidden" name="id_oferta" value="${oferta.idOferta}">
                             <input type="hidden" name="rut" value="${usuario.rut}">
-                        </form>
+                            </div>
+                            </div>
+                            <div class="card-action">
+                                <div class="field input-field right-align">
+                                    <input type="submit" class="btn pulse" value="Enviar valoración">
+                                    </form>
+                                </div>
+                                <br>
+                                <!--<div id="card-alert" class="card red">
+                                    <div class="card-content white-text">
+                                        <p><i class="mdi-alert-error"></i> DANGER : You have done 5 actions.</p>
+                                    </div>
+                                </div>-->
+                            </div>
                     </div>
                 </div>
+                <div class="col  s6 m6">
+                    <div  class="card">
+                        <div class="card-content">
+                            <span class="card-title">Información de la oferta</span>
+                            <div class="card-stacked">
+                                <br>
+                                <p>${oferta.descripcion}</p>
+                                <br>
+                                <div class="chip">
+                                    <i class="material-icons" style="font-size: 13px">local_offer</i>
+                                    Descuento: $${oferta.descuento}
+                                </div>
+                                <div class="chip">
+                                    <i class="material-icons" style="font-size: 13px">attach_money</i>
+                                    Valor final: $${oferta.valorFinal}
+                                </div>
+                                <div class="chip">
+                                    <i class="material-icons" style="font-size: 13px">remove_red_eye</i>
+                                    Visualizaciones: ${oferta.visitas}
+                                </div>
+                                <div class="chip">
+                                    <i class="material-icons" style="font-size: 13px">star</i>
+                                    Valoraciones: ${oferta.valoraciones}
+                                </div>
+                                <div class="chip">
+                                    <i class="material-icons"style="font-size: 13px">face</i>
+                                    Publicado por: ${oferta.publicador.nombre}
+                                </div>
+                                <br>
+                                <br>
+                                <div class="row">
+                                    <c:forEach items="${tiendas}" var="element" >
+
+                                    </c:forEach>
+                                    <ul class="collapsible" data-collapsible="accordion">
+                                        <li>
+                                            <div class="collapsible-header" id="master" data-click="remap"s>
+                                                <i class="material-icons">store</i> Mapa de tiendas </div>
+                                            <div >
+                                                ${element.nombre}
+                                                ${element.latitud}
+                                                ${element.longitud}
+                                                <span class="badge"></span>
+                                                <div id="map"></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div
+        </div>
     </div>
-</div>
-</div>
-</div>
-</div>
 
-<script>
-    
-    $("#${oferta.imagen}).elevateZoom();
-    
-</script>
 
-<%@ include file="layout/footer.jsp" %>        
+    <%@ include file="layout/footer.jsp" %>        

@@ -15,5 +15,12 @@
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+        <style>
+            #map {
+                height: 400px;
+                width: 100%;
+            }
+        </style>
+        
     </head>
     <body>
