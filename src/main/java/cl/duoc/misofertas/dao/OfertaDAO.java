@@ -12,6 +12,7 @@ import cl.duoc.misofertas.dto.ProductoDTO;
 import cl.duoc.misofertas.dto.RubroDTO;
 import cl.duoc.misofertas.dto.TiendaDTO;
 import cl.duoc.misofertas.dto.UsuarioDTO;
+import cl.duoc.misofertas.dto.ValoracionDTO;
 import cl.duoc.misofertas.utils.StringUtil;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -77,7 +78,7 @@ public class OfertaDAO {
             ofertaDTO.setProductoDTO(productoDTO);
 
             if (ofertaDTO.getImagen() == null || ofertaDTO.getImagen().isEmpty()) {
-                ofertaDTO.setImagen("not_found.png");
+                ofertaDTO.setImagen("image_not_found.png");
             }
 
             ofertas.add(ofertaDTO);
@@ -122,6 +123,8 @@ public class OfertaDAO {
             publicador.setNombre(rs.getString("nombre_publicador"));
             publicador.setApellido(rs.getString("apellido_publicador"));
             ofertaDTO.setPublicador(publicador);
+            
+            ValoracionDTO valoracionDTO = new ValoracionDTO();
             
         }
 
