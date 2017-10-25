@@ -5,8 +5,13 @@
  */
 package cl.duoc.misofertas.controller;
 
+import cl.duoc.misofertas.dao.UsuarioDAO;
+import cl.duoc.misofertas.dto.UsuarioDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +34,7 @@ public class Perfil extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -44,9 +49,9 @@ public class Perfil extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         
+
         request.getRequestDispatcher("perfil.jsp").forward(request, response);
-        
+
     }
 
     /**
@@ -60,11 +65,37 @@ public class Perfil extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          
-        
-        //actualizar perfil
+
+        String correo = request.getParameter("correo");
+        String password = request.getParameter("password");
+        String fono = request.getParameter("fono");
+        String direccion = request.getParameter("direccion");
+        String rut = request.getParameter("rut");
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setUsername(correo);
+        usuarioDTO.setPassword(password);
+        usuarioDTO.setFono(fono);
+        usuarioDTO.setDireccion(direccion);
+        usuarioDTO.setRut(rut);
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        boolean inserted = false;
+        try {
+            inserted = usuarioDAO.update(usuarioDTO);
+
+            if (!inserted) {
+                request.setAttribute("mensaje", "Ocurrió un error inesperado al actualizar el perfil. Intente nuevamente más tarde.");
+            } else {
+                request.setAttribute("mensaje", "Su perfil se ha actualizado correctamente.");
+            }
+
+        } catch (SQLException ex) {
+             request.setAttribute("mensaje", "Ocurrió un error inesperado al actualizar el perfil. Intente nuevamente más tarde.");
+        }
+
         request.getRequestDispatcher("perfil.jsp").forward(request, response);
-        
+
     }
 
     /**
