@@ -26,6 +26,16 @@
 </nav>
 <div class="container">
 
+    <br>
+    
+    <c:if test="${not empty mensaje}">
+    <div id="card-alert" class="card green">
+        <div class="card-content white-text">
+            <p><i class="mdi-alert-error"></i> ${mensaje} </p>
+        </div>
+    </div>
+    </c:if>
+    
     <div id="profile-page" class="section">
         <!-- profile-page-header -->
         <div id="profile-page-header" class="card">
@@ -105,7 +115,7 @@
                                         <label for="password">Contraseña</label>
                                     </div>
                                 </div>
-                              <div class="row">
+                                <div class="row">
                                     <div class="input-field col s12">
                                         <input id="password6" type="text" value="${usuario.fono}">
                                         <label for="fono">Fono</label>

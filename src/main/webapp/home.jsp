@@ -30,11 +30,20 @@
 
         <p>${error}</p>
 
-        <div class="chip">
-            Bienvenid@ <a href="${pageContext.request.contextPath}/perfil">${sessionScope.usuario.nombre}</a> 
+        <div id="card-alert" class="card blue">
+            <div class="card-content white-text">
+                <p>Bienvenid@ <b>${sessionScope.usuario.nombre}</b></p>
+            </div>
         </div>
 
         <div class="row"></div>
+        <c:if test="${not empty success}">
+            <div id="card-alert" class="card green">
+                <div class="card-content white-text">
+                    <p><i class="mdi-alert-error"></i> Su valoración ha sido recibida con éxito.</p>
+                </div>
+            </div>
+        </c:if>
         <c:choose>
             <c:when test="${rol=='Consumidor'}">
                 <div class="row">
@@ -59,7 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                        <c:if test="${rowCounter.index eq 1}">
+                        <c:if test="${rowCounter.index eq 3}">
                         </div>
                     </c:if>
                 </c:forEach>

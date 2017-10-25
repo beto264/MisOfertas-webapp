@@ -28,6 +28,10 @@
         <servlet-name>Oferta</servlet-name>
         <servlet-class>cl.duoc.misofertas.controller.Oferta</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Cupones</servlet-name>
+        <servlet-class>cl.duoc.misofertas.controller.Cupones</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>Oferta</servlet-name>
         <url-pattern>/oferta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Cupones</servlet-name>
+        <url-pattern>/cupones</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
