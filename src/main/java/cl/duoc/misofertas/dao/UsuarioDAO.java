@@ -94,23 +94,28 @@ public final class UsuarioDAO {
 
         return exists;
     }
-    
-    public boolean update(String correo, String rut) throws SQLException {
-
-        boolean exists = false;
-
-        PreparedStatement ps = con.prepareStatement("select * from usuario where correo = ? or rut = ?");
-        ps.setString(1, correo);
-        ps.setString(2, rut);
-        ResultSet rs = ps.executeQuery();
-        if (rs.isBeforeFirst()) {
-            exists = true;
-        }
-
-        return exists;
-    }
 
     //Modificar más adelante
+    public boolean update(UsuarioDTO usuario) throws SQLException {
+
+        boolean inserted = false;
+
+        CallableStatement cs = con.prepareCall("{call update_user(?,?,?,?,?)}");
+        cs.setString(1, usuario.getUsername());
+        cs.setString(2, usuario.getPassword());
+        cs.setString(3, usuario.getFono());
+        cs.setString(4, usuario.getDireccion());
+        cs.setString(5, usuario.getRut());
+
+        int row = cs.executeUpdate();
+
+        if (row > 0) {
+            inserted = true;
+        }
+
+        return inserted;
+    }
+
     public UsuarioDTO getUserByEmail(String correo) throws SQLException {
 
         PreparedStatement ps = con.prepareStatement("select * from usuario where correo = ? ");
@@ -132,6 +137,6 @@ public final class UsuarioDAO {
         }
 
         return usuarioDTO;
-    }
 
+    }
 }
