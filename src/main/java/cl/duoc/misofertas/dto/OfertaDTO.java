@@ -27,11 +27,18 @@ public class OfertaDTO {
     private String valoraciones;
     private List<TiendaDTO> tiendas;
     private UsuarioDTO publicador;
+    private List<ValoracionDTO> valoracionesDTO;
 
     public OfertaDTO() {
     }
 
-    
+    public List<ValoracionDTO> getValoracionesDTO() {
+        return valoracionesDTO;
+    }
+
+    public void setValoracionesDTO(List<ValoracionDTO> valoracionesDTO) {
+        this.valoracionesDTO = valoracionesDTO;
+    }
 
     public List<TiendaDTO> getTiendas() {
         if (tiendas == null) {

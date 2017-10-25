@@ -15,17 +15,19 @@ import java.util.Objects;
  */
 public class ValoracionDTO {
     
-    private int idValoracion;
-    private int idOferta;
+    private String idValoracion;
+    private String idOferta;
     private String rut;
-    private Nota nota;
+    private String nota;
     private Date fecha;
     private String imagen;
+    private String comentario;
+    private UsuarioDTO usuarioDTO;
 
     public ValoracionDTO() {
     }
 
-    public ValoracionDTO(int idValoracion, int idOferta, String rut, Nota nota, Date fecha, String imagen) {
+    public ValoracionDTO(String idValoracion, String idOferta, String rut, String nota, Date fecha, String imagen) {
         this.idValoracion = idValoracion;
         this.idOferta = idOferta;
         this.rut = rut;
@@ -34,19 +36,37 @@ public class ValoracionDTO {
         this.imagen = imagen;
     }
 
-    public int getIdValoracion() {
+    public UsuarioDTO getUsuarioDTO() {
+        return usuarioDTO;
+    }
+
+    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+        this.usuarioDTO = usuarioDTO;
+    }
+
+    
+    
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+    
+    public String getIdValoracion() {
         return idValoracion;
     }
 
-    public void setIdValoracion(int idValoracion) {
+    public void setIdValoracion(String idValoracion) {
         this.idValoracion = idValoracion;
     }
 
-    public int getIdOferta() {
+    public String getIdOferta() {
         return idOferta;
     }
 
-    public void setIdOferta(int idOferta) {
+    public void setIdOferta(String idOferta) {
         this.idOferta = idOferta;
     }
 
@@ -58,11 +78,11 @@ public class ValoracionDTO {
         this.rut = rut;
     }
 
-    public Nota getNota() {
+    public String getNota() {
         return nota;
     }
 
-    public void setNota(Nota nota) {
+    public void setNota(String nota) {
         this.nota = nota;
     }
 
@@ -90,8 +110,6 @@ public class ValoracionDTO {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 89 * hash + this.idValoracion;
-        hash = 89 * hash + this.idOferta;
         hash = 89 * hash + Objects.hashCode(this.rut);
         hash = 89 * hash + Objects.hashCode(this.nota);
         hash = 89 * hash + Objects.hashCode(this.fecha);
