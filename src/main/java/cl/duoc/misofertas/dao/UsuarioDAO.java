@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+import oracle.jdbc.OracleTypes;
 
 
 /*
@@ -55,7 +56,7 @@ public final class UsuarioDAO {
 
         boolean inserted = false;
 
-        String command = "{call add_user(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String command = "{call add_user(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         try (CallableStatement cstmt = con.prepareCall(command)) {
             cstmt.setString(1, usuario.getRut());
             cstmt.setString(2, usuario.getPassword());
@@ -69,6 +70,7 @@ public final class UsuarioDAO {
             cstmt.setString(10, "Consumidor");
             cstmt.setInt(11, 0);
             cstmt.setString(12, "");
+            cstmt.setString(13, usuario.getNotificacion());
 
             int row = cstmt.executeUpdate();
 
@@ -134,9 +136,37 @@ public final class UsuarioDAO {
             usuarioDTO.setFono(rs.getString("fono"));
             usuarioDTO.setDireccion(rs.getString("direccion"));
             usuarioDTO.setRut(rs.getString("rut"));
+            usuarioDTO.setPuntosAcumulados(Integer.valueOf(rs.getString("puntos_acumulados")));
         }
 
         return usuarioDTO;
 
     }
+
+    public String[] getEstadisticas(String rut) throws SQLException {
+
+        CallableStatement cs = con.prepareCall("{call get_estadisticas_user(?,?)}");
+        cs.setString(1, rut);
+        cs.registerOutParameter(2, OracleTypes.CURSOR);
+
+        cs.executeUpdate();
+
+        ResultSet rs = rs = (ResultSet) cs.getObject(2);
+
+        UsuarioDTO usuarioDTO = null;
+        while (rs.next()) {
+            usuarioDTO = new UsuarioDTO();
+            usuarioDTO.setRut(rut);
+            usuarioDTO.setValoracionesTotales(rs.getString("valoraciones"));
+            usuarioDTO.setPuntosAcumulados(Integer.valueOf(rs.getString("puntos_acumulados")));
+        }
+
+        String estadisticas[] =  new String[2];
+        estadisticas[0] = String.valueOf(usuarioDTO.getPuntosAcumulados());
+        estadisticas[1] = usuarioDTO.getValoracionesTotales();
+        
+        return estadisticas;
+
+    }
+
 }

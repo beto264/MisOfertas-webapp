@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -50,6 +51,30 @@ public class Perfil extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+        UsuarioDTO userSession = new UsuarioDTO();
+        userSession = (UsuarioDTO) session.getAttribute("usuario");
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+
+        try {
+            String rut = userSession.getRut();
+            String correo = userSession.getUsername();
+            usuarioDTO = usuarioDAO.getUserByEmail(correo);
+            String[] estadisticas = usuarioDAO.getEstadisticas(rut);
+            usuarioDTO.setPuntosAcumulados(Integer.valueOf(estadisticas[0]));
+            usuarioDTO.setValoracionesTotales(estadisticas[1]);
+        } catch (Exception ex) {
+            Logger.getLogger(Perfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (usuarioDTO.getPuntosAcumulados() != null && usuarioDTO.getPuntosAcumulados() >= 10) {
+            request.setAttribute("cupon", "si");
+        }
+
+        request.setAttribute("usuario", usuarioDTO);
         request.getRequestDispatcher("perfil.jsp").forward(request, response);
 
     }
@@ -91,7 +116,7 @@ public class Perfil extends HttpServlet {
             }
 
         } catch (SQLException ex) {
-             request.setAttribute("mensaje", "Ocurrió un error inesperado al actualizar el perfil. Intente nuevamente más tarde.");
+            request.setAttribute("mensaje", "Ocurrió un error inesperado al actualizar el perfil. Intente nuevamente más tarde.");
         }
 
         request.getRequestDispatcher("perfil.jsp").forward(request, response);

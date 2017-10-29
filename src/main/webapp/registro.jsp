@@ -54,6 +54,15 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col s12">
+                                <p>
+                                    <input type="checkbox" name="notificacion" id="notificacion" />
+                                    <label for="notificacion">¿Desea recibir notificaciones en su correo de las últimas ofertas ingresadas?</label>
+                                </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
                             <button type="submit"
                                     class="btn waves-effect waves-light col s12" id="btnRegistrar">Registrarse</button>
                         </div>

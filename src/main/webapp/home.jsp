@@ -9,13 +9,13 @@
             <c:choose>
                 <c:when test="${rol=='Consumidor'}">
                     <li  class="active"><a href="">Ofertas</a></li>
-                    <li><a href="${pageContext.request.contextPath}/cupones">Cupones</a></li>
+                    <li><a href="${pageContext.request.contextPath}/certificados">Cupones</a></li>
                     <li><a href="${pageContext.request.contextPath}/perfil">Perfil</a></li>
                     <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <li><a href="">Ofertas</a></li>
-                    <li><a href="${pageContext.request.contextPath}/cupones">Cupones</a></li>
+                    <li><a href="${pageContext.request.contextPath}/certificados">Cupones</a></li>
                     <li><a href="${pageContext.request.contextPath}/perfil">Perfil</a></li>
                     <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
                     </c:when>
@@ -32,7 +32,7 @@
 
         <div id="card-alert" class="card blue">
             <div class="card-content white-text">
-                <p>Bienvenid@ <b>${sessionScope.usuario.nombre}</b></p>
+                <p>Conectad@ como <b>${sessionScope.usuario.nombre}</b></p>
             </div>
         </div>
 

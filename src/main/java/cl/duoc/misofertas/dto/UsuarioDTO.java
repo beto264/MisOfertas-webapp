@@ -26,7 +26,9 @@ public class UsuarioDTO implements Serializable {
     private Date ultimoAcceso;
     private String rol;
     private Integer puntosAcumulados;
+    private String valoracionesTotales;
     private String rutEmpresaACargo;
+    private String notificacion;
 
     public UsuarioDTO() {
     }
@@ -215,6 +217,23 @@ public class UsuarioDTO implements Serializable {
     public void setRutEmpresaACargo(String rutEmpresaACargo) {
         this.rutEmpresaACargo = rutEmpresaACargo;
     }
+    
+    public String getValoracionesTotales() {
+        return valoracionesTotales;
+    }
+
+    public void setValoracionesTotales(String valoracionesTotales) {
+        this.valoracionesTotales = valoracionesTotales;
+    }
+
+    public String getNotificacion() {
+        return notificacion;
+    }
+
+    public void setNotificacion(String notificacion) {
+        this.notificacion = notificacion;
+    }
+    
     
 
 }

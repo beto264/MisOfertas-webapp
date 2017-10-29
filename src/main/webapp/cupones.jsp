@@ -1,52 +1,68 @@
-<%-- 
-    Document   : cupones
-    Created on : 25/10/2017, 02:18:33 PM
-    Author     : Beto
---%>
+<%@ include file="layout/header.jsp" %>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Pagina no encontrada</title>
-        <style type="text/css">
-            body { margin: 0px; }
+<style>
 
-            .background {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
+    .material-icons{
+        display: inline-flex;
+        vertical-align: top;
+    }
 
-            /* 
-            http://jsfiddle.net/6KaMy/1/
-            is there a better way than the absolute positioning and negative margin.
-            It has the problem that the content will  will be cut on top if the window is smalller than the content.
-            */
+</style>
 
-            .content {
-                width: 900px;
-                height: 500px;
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo center"></a><a href="#"
+                                                     data-activates="mobile-demo" class="button-collapse"><i
+                class="material-icons">Menú</i></a>
+        <ul class="right hide-on-med-and-down">
+            <c:choose>
+                <c:when test="${rol=='Consumidor'}">
+                    <li ><a href="${pageContext.request.contextPath}/home">Ofertas</a></li>
+                    <li><a href="${pageContext.request.contextPath}/certificados">Cupones</a></li>
+                    <li class=""><a href="${pageContext.request.contextPath}/perfil">Perfil</a></li>
+                    <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="">Ofertas</a></li>
+                    <li><a href="${pageContext.request.contextPath}/certificados">Cupones</a></li>
+                    <li><a href="${pageContext.request.contextPath}/perfil">Perfil</a></li>
+                    <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
+                    </c:when>
+                </c:choose>
+            <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container"
 
-                position:absolute;
-                left:0; right:0;
-                top:0; bottom:0;
-                margin:auto;
+     <br>
+    <br>
 
-                max-width:100%;
-                max-height:100%;
-            }
+    <div class="row">
 
-            -->
-        </style>
-    </head>
-    <body>
-        <div class="background">
-            <div class="content">
-            <img class="center-align" src="img/404.jpg"/>
+        <ul class="collapsible popout" data-collapsible="accordion">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Cupones generados</span>
+                </div>
             </div>
-        </div>
-    </body>
-</html>
+            <br>
+            <c:forEach items="${certificados}" var="element" >
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col s6">
+                                <span>Fecha emisión: ${element.fechaEmision}</span>
+                            </div>
+                            <div class="col s2 offset-s1 offset-m2 offset-l3">
+                                <a class="waves-effect waves-light btn right-align" href="${pageContext.request.contextPath}/certificados?action=get?id=${element.idCertificado}">Descargar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </ul>
+    </div>
+</div>
+
+<%@ include file="layout/footer.jsp" %>   

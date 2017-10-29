@@ -12,8 +12,6 @@
 
         <link rel="stylesheet"
               href="css/materialize.min.css" />
-        <link href="css/icons.css"
-              rel="stylesheet" />
 
     </head>
     <body>
@@ -47,10 +45,7 @@
                                                    required /> <label for="password" class="active">
                                                 Contraseña</label>
                                         </div>
-                                        <div class="input-field col s12 m12 l12  login-text">
-                                            <input type="checkbox" id="remember-me"> <label
-                                                for="remember-me">Recordarme</label>
-                                        </div>
+
                                     </div>
 
                                     <br>
@@ -73,14 +68,101 @@
                             </p>
                         </div>
                         <div class="input-field col s6 m6 l6">
-                            <p class="margin right-align medium-small">
+                            <!--<p class="margin right-align medium-small">
                                 <a href="">Olvidaste la contraseña?</a>
-                            </p>
+                            </p>-->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <%@ include file="layout/footer.jsp" %>
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/materialize.min.js"></script>
+        <script src="js/validarRUT.js"></script>
+        <script src="js/jquery.elevateZoom-3.0.8.min.js"></script>
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                $('.collapsible').collapsible();
+            });
+
+            $(document).ready(function () {
+                $('select').material_select();
+            });
+
+            $(document).ready(function () {
+                $(".button-collapse").sideNav();
+                $('.modal').modal({
+                    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                    opacity: .5, // Opacity of modal background
+                    inDuration: 300, // Transition in duration
+                    outDuration: 200, // Transition out duration
+                    startingTop: '4%', // Starting top style attribute
+                    endingTop: '10%', // Ending top style attribute
+                    ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                        var id = trigger.data('id');
+                        alert(id);
+                        console.log(modal, trigger);
+                    },
+                    complete: function () {
+
+                    } // Callback for Modal close
+                }
+                );
+            });
+
+            $('[data-click]').on('click', function (e) {
+                initMap();
+            });
+
+
+
+        </script>
+
+        <script>
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 16,
+                    // center: latLng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+
+                var bounds = new google.maps.LatLngBounds();
+
+            <c:forEach var="element" items="${tiendas}" varStatus="status">
+                var latLng = new google.maps.LatLng(<c:out value="${element.latitud}"/>, <c:out value="${element.longitud}"/>);
+
+                bounds.extend(latLng);
+
+                var windowDialog = new google.maps.InfoWindow({
+                    content: "content display dialog"
+                });
+
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                });
+
+                marker.addListener('click', toggleBounce);
+
+                function toggleBounce() {
+                    if (marker.getAnimation() !== null) {
+                        marker.setAnimation(null);
+                    } else {
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                    }
+                }
+                google.maps.event.addListener(marker, 'click', function () {
+                    window.location.href = 'https://www.google.com/maps/search/?api=1&query=<c:out value="${element.latitud}"/>,<c:out value="${element.longitud}"/>';
+                });
+
+            </c:forEach>
+
+                map.fitBounds(bounds);
+            }
+
+        </script>
 

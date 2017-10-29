@@ -11,18 +11,27 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import org.quartz.Job;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
 import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
+import org.quartz.Trigger;
 
+/**
+ * La idea es tener un demonio corriendo en busqueda de X ultimas ofertas para enviarlas a los usuarios suscritos en el registro de cuenta;
+ * @author Beto
+ */
 public class MailSender {
 
     private static final String USERNAME = "misofertas.noreply@gmail.com";
     private static final String PASSWORD = "misofertaspass";  //hackerman ¯\_(^-^)_/¯
     private static final Properties PROPS = new Properties();
+    private Scheduler scheduler;
+    private Job job;
+    private Trigger trigger;
 
     private static void loadProperties() {
         PROPS.put("mail.smtp.starttls.enable", "true");
@@ -56,6 +65,10 @@ public class MailSender {
         }
     }
 
+    public static void startScheduler(){
+        
+    }
+    
     public static void main(String[] args) {
         Scheduler scheduler;
         try {
@@ -63,7 +76,7 @@ public class MailSender {
             scheduler.start();
 
             while (true) {
-                MailSender.send("alb.tejos@gmail.com", "Asunto", "Probando Scheduler");
+                MailSender.send("alb.tejos@gmail.com", "Asunto", "<h1>PROBANDO</h1>");
             }
 
             //scheduler.shutdown();

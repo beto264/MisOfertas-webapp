@@ -80,6 +80,14 @@ public class Registro extends HttpServlet {
             usuarioDTO.setPassword(request.getParameter("password"));
             usuarioDTO.setRut(request.getParameter("rut"));
             usuarioDTO.setUsername(request.getParameter("correo"));
+            
+            String[] notificacion = request.getParameterValues("notificacion");
+            
+            if (notificacion[0].equalsIgnoreCase("on")) {
+                usuarioDTO.setNotificacion("SI");
+            }else{
+                usuarioDTO.setNotificacion("NO");
+            }
 
             exists = usuarioDAO.userExists(usuarioDTO.getUsername(), usuarioDTO.getRut());
             mensajeError = exists ? "Ya fue registrado ese usuario." : "";
@@ -93,10 +101,10 @@ public class Registro extends HttpServlet {
                 request.setAttribute("password", usuarioDTO.getPassword());
                 request.setAttribute("correo", usuarioDTO.getUsername());
 
-                sesion.setAttribute("usuario", usuarioDTO.getNombre());
+                sesion.setAttribute("usuario", usuarioDTO);
                 sesion.setAttribute("rol", usuarioDTO.getRol());
                 
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                request.getRequestDispatcher("home").forward(request, response);
             } else {
                 request.setAttribute("error", mensajeError);
                 request.getRequestDispatcher("registro.jsp").forward(request, response);
