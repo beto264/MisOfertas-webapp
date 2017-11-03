@@ -120,6 +120,8 @@ public class Certificados extends HttpServlet {
                 request.getRequestDispatcher("cupones.jsp").forward(request, response);
             } catch (SQLException ex) {
                 Logger.getLogger(Certificados.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(Certificados.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (request.getParameter("action").equalsIgnoreCase("get")) {
             String rut = usuarioDTO.getRut();
@@ -131,6 +133,8 @@ public class Certificados extends HttpServlet {
             
             request.getRequestDispatcher("home").forward(request, response);
             
+        }else{
+            request.getRequestDispatcher("cupones.jsp").forward(request, response);
         }
     }
 

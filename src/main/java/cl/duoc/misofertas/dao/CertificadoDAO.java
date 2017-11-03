@@ -53,7 +53,7 @@ public class CertificadoDAO {
         return inserted;
     }
 
-    public List<CertificadoDTO> getByRut(String rut) throws SQLException {
+    public List<CertificadoDTO> getByRut(String rut) throws SQLException, ParseException {
 
         Connection con = new DBConnection().connect();
 
@@ -73,7 +73,13 @@ public class CertificadoDAO {
             CertificadoDTO certificadoDTO = new CertificadoDTO();
             certificadoDTO.setIdCertificado(rs.getString("id_certificado"));
             certificadoDTO.setCodigoBarra(rs.getLong("codigo_barra"));
-            certificadoDTO.setFechaEmision(rs.getDate("fecha_emision"));
+             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String fecha = dateFormat.format(rs.getDate("fecha_emision"));
+
+            java.util.Date fechaParsed = dateFormat.parse(fecha);
+            java.sql.Date sqlDate = new java.sql.Date(fechaParsed.getTime());
+            
+            certificadoDTO.setFechaEmision(sqlDate);
             certificadoDTO.setRut(rs.getString("rut"));
 
             DescuentoDTO descuentoDTO = new DescuentoDTO();
@@ -93,7 +99,7 @@ public class CertificadoDAO {
         return certificados;
     }
     
-     public List<CertificadoDTO> getById(String id) throws SQLException {
+     public List<CertificadoDTO> getById(String id) throws SQLException, ParseException {
 
         Connection con = new DBConnection().connect();
 
@@ -113,7 +119,12 @@ public class CertificadoDAO {
             CertificadoDTO certificadoDTO = new CertificadoDTO();
             certificadoDTO.setIdCertificado(rs.getString("id_certificado"));
             certificadoDTO.setCodigoBarra(rs.getLong("codigo_barra"));
-            certificadoDTO.setFechaEmision(rs.getDate("fecha_emision"));
+            
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String fecha = dateFormat.format(rs.getDate("fecha_emision"));
+
+            java.util.Date fechaParsed = dateFormat.parse(fecha);
+            java.sql.Date sqlDate = new java.sql.Date(fechaParsed.getTime());
             certificadoDTO.setRut(rs.getString("rut"));
 
             DescuentoDTO descuentoDTO = new DescuentoDTO();

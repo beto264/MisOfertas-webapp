@@ -2,6 +2,13 @@ body{
     background-color: #F6F6F6;
 }
 
+nav{
+   background-color: #2196F3 !important;
+}
+
+.page-footer{
+    background-color: #2196F3 !important;
+}
 
 /*!
  * Materialize v0.100.2 (http://materializecss.com)

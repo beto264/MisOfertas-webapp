@@ -5,28 +5,29 @@
  */
 package cl.duoc.misofertas.controller;
 
-import cl.duoc.misofertas.dao.OfertaDAO;
-import cl.duoc.misofertas.dto.OfertaDTO;
-import cl.duoc.misofertas.utils.Roles;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.jboss.logging.Logger;
 
 /**
  *
  * @author Beto
  */
-public class Home extends HttpServlet {
-
-    private static final Logger logger = Logger.getLogger(Home.class);
+public class Servlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,33 +39,21 @@ public class Home extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, DocumentException {
+        response.setContentType("application/pdf");
+         OutputStream outputStream = response.getOutputStream();
+           Document document = new Document();
+           PdfWriter.getInstance(document, outputStream);
+           document.open();
+           Paragraph paragraph = new Paragraph();
+           Font font = new Font(FontFamily.HELVETICA,16,Font.BOLD, BaseColor.BLACK);
+           paragraph.setFont(font);
+           paragraph.add(new Phrase("Test"));
+           document.add(paragraph);
+           document.close();
 
-        //el rol y el usuario está almacenado en variables de sesión, por lo tanto un redireccionamiento a otro jsp no alterará estos parámetros
-        //acá debemos chequear el rol para saber si pinchamos la bd trayendo las ofertas o no
-        HttpSession session = request.getSession();
-
-        String rol = (String) session.getAttribute("rol");
-
-        OfertaDAO ofertaDAO = new OfertaDAO();
-        List<OfertaDTO> ofertas = null;
-
-        if (rol.equalsIgnoreCase(Roles.Consumidor.name())) {
-            try {
-                //cargamos las ofertas
-                ofertas = ofertaDAO.getAll();
-                session.setAttribute("ofertas", ofertas);
-            } catch (SQLException ex) {
-                request.setAttribute("error", ex.getMessage());
-            } catch (Exception ex) {
-                request.setAttribute("error", ex.getMessage());
-            }
         }
 
-        session.setAttribute("rol", rol);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
-
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -78,7 +67,11 @@ public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DocumentException ex) {
+            Logger.getLogger(Servlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -92,7 +85,11 @@ public class Home extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DocumentException ex) {
+            Logger.getLogger(Servlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
