@@ -17,10 +17,21 @@ public class CertificadoDTO {
     private Date fechaEmision;
     private String rut;
     private long codigoBarra;
+    private UsuarioDTO usuarioDTO;
     private DescuentoDTO descuento;
 
     public CertificadoDTO() {
     }
+
+    public UsuarioDTO getUsuarioDTO() {
+        return usuarioDTO;
+    }
+
+    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+        this.usuarioDTO = usuarioDTO;
+    }
+    
+    
 
     public CertificadoDTO(DescuentoDTO descuento) {
         this.descuento = descuento;

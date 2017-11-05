@@ -9,6 +9,7 @@ import cl.duoc.misofertas.db.DBConnection;
 import cl.duoc.misofertas.dto.CertificadoDTO;
 import cl.duoc.misofertas.dto.DescuentoDTO;
 import cl.duoc.misofertas.dto.RubroDTO;
+import cl.duoc.misofertas.dto.UsuarioDTO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -98,12 +99,12 @@ public class CertificadoDAO {
 
         return certificados;
     }
-    
+     
      public List<CertificadoDTO> getById(String id) throws SQLException, ParseException {
 
         Connection con = new DBConnection().connect();
 
-        String sp = "{call get_certificados(?, ?)}";
+        String sp = "{call get_certificados_by_id(?, ?)}";
 
         CallableStatement cs = con.prepareCall(sp);
         cs.setString(1, id);
@@ -126,7 +127,8 @@ public class CertificadoDAO {
             java.util.Date fechaParsed = dateFormat.parse(fecha);
             java.sql.Date sqlDate = new java.sql.Date(fechaParsed.getTime());
             certificadoDTO.setRut(rs.getString("rut"));
-
+            certificadoDTO.setFechaEmision(sqlDate);
+            
             DescuentoDTO descuentoDTO = new DescuentoDTO();
             descuentoDTO.setIdDescuento(rs.getString("id_descuento"));
             descuentoDTO.setPorcentaje(rs.getString("porcentaje"));
@@ -136,7 +138,14 @@ public class CertificadoDAO {
             rubroDTO.setNombre(rs.getString("rubro"));
             descuentoDTO.setRubro(rubroDTO);
             
+            UsuarioDTO usuarioDTO = new UsuarioDTO();
+            usuarioDTO.setNombre(rs.getString("nombre"));
+            usuarioDTO.setApellido(rs.getString("apellido"));
+            usuarioDTO.setRut(rs.getString("rut"));
+            usuarioDTO.setPuntosAcumulados(Integer.valueOf(rs.getString("puntos_acumulados")));
+            
             certificadoDTO.setDescuento(descuentoDTO);
+            certificadoDTO.setUsuarioDTO(usuarioDTO);
 
             certificados.add(certificadoDTO);
         }

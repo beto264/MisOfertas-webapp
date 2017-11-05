@@ -13,8 +13,8 @@
         <servlet-class>cl.duoc.misofertas.controller.Logout</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Servlet</servlet-name>
-        <servlet-class>cl.duoc.misofertas.controller.Servlet</servlet-class>
+        <servlet-name>Cupon</servlet-name>
+        <servlet-class>cl.duoc.misofertas.controller.Cupon</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Home</servlet-name>
@@ -45,8 +45,8 @@
         <url-pattern>/registro</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Servlet</servlet-name>
-        <url-pattern>/servlet</url-pattern>
+        <servlet-name>Cupon</servlet-name>
+        <url-pattern>/cupon</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>

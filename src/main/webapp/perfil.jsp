@@ -46,7 +46,7 @@
             </figure>-->
             <div class="card-content">
                 <div class="row">                   
-                    <div class="col s1 offset-s1 center-align">
+                    <div class="col s1 offset-s1 center-align hide-on-small-only">
                         <i class="large material-icons">person</i>
                     </div>
                     <div class="col s3 offset-s1">                        

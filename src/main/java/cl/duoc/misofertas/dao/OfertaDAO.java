@@ -21,6 +21,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,10 +59,9 @@ public class OfertaDAO {
             ofertaDTO.setDescuento(rs.getString("descuento"));
             ofertaDTO.setDescripcion(rs.getString("descripcion_oferta"));
             ofertaDTO.setImagen(rs.getString("imagen"));
-            
+
             //String valorFinal = (String ) rs.getString("valor_final");
             //ofertaDTO.setValorFinal(StringUtil.separarMiles(valorFinal));
-            
             ofertaDTO.setValorFinal(rs.getString("valor_final"));
             ofertaDTO.setRutPublicador(rs.getString("rut_publicador"));
             ofertaDTO.setVisitas(rs.getString("visitas_oferta"));
@@ -83,7 +84,7 @@ public class OfertaDAO {
 
             ofertas.add(ofertaDTO);
         }
-
+        
         return ofertas;
     }
 
@@ -94,7 +95,7 @@ public class OfertaDAO {
         String sp = "{call get_oferta_by_id(?, ?)}";
 
         CallableStatement cs = con.prepareCall(sp);
-        cs.setString(1,  id);
+        cs.setString(1, id);
         cs.registerOutParameter(2, OracleTypes.CURSOR);
 
         cs.executeUpdate();
@@ -109,33 +110,32 @@ public class OfertaDAO {
             ofertaDTO.setDescuento(rs.getString("descuento"));
             ofertaDTO.setDescripcion(rs.getString("descripcion"));
             ofertaDTO.setImagen(rs.getString("imagen"));
-            
+
             //DecimalFormat decimalFormat = new DecimalFormat("#.###");
             //String valorfinal = decimalFormat.format(rs.getString("valor_final"));
-            
             ofertaDTO.setValorFinal(rs.getString("valor_final"));
-            
+
             ofertaDTO.setRutPublicador(rs.getString("rut_publicador"));
             ofertaDTO.setVisitas(rs.getString("numero_visitas"));
             ofertaDTO.setValoraciones(rs.getString("valoraciones"));
-            
+
             UsuarioDTO publicador = new UsuarioDTO();
             publicador.setNombre(rs.getString("nombre_publicador"));
             publicador.setApellido(rs.getString("apellido_publicador"));
             ofertaDTO.setPublicador(publicador);
-            
+
             ValoracionDTO valoracionDTO = new ValoracionDTO();
-            
+
         }
 
         return ofertaDTO;
     }
-    
-     public List<TiendaDTO> getTiendasByOferta(String idOferta) throws SQLException {
+
+    public List<TiendaDTO> getTiendasByOferta(String idOferta) throws SQLException {
 
         Connection con = new DBConnection().connect();
         List<TiendaDTO> tiendas = new ArrayList<>();
-        
+
         String sp = "{call get_tiendas_by_oferta(?, ?)}";
 
         CallableStatement cs = con.prepareCall(sp);
@@ -150,14 +150,14 @@ public class OfertaDAO {
         while (rs.next()) {
             tiendaDTO = new TiendaDTO();
             tiendaDTO.setNombre(rs.getString("nombre"));
-             tiendaDTO.setDireccion(rs.getString("direccion"));
+            tiendaDTO.setDireccion(rs.getString("direccion"));
             tiendas.add(tiendaDTO);
         }
 
         return tiendas;
     }
-    
-    public int addVisita(String id, String conteoVisita) throws SQLException{
+
+    public int addVisita(String id, String conteoVisita) throws SQLException {
         Connection con = new DBConnection().connect();
 
         String sp = "{call add_visita(?, ?)}";
@@ -168,15 +168,15 @@ public class OfertaDAO {
 
         int count = cs.executeUpdate();
         return count;
-        
+
     }
-    
+
     public static void main(String[] args) {
         OfertaDAO o = new OfertaDAO();
         try {
             List<TiendaDTO> tiendas = o.getTiendasByOferta("1");
             for (TiendaDTO tienda : tiendas) {
-                         System.out.println(tienda);   
+                System.out.println(tienda);
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
