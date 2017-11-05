@@ -4,7 +4,7 @@
     <div class="nav-wrapper">
         <a href="#" class="brand-logo center"></a><a href="#"
                                                      data-activates="mobile-demo" class="button-collapse"><i
-                class="material-icons">Menú</i></a>
+                class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <c:choose>
                 <c:when test="${rol=='Consumidor'}">
@@ -20,7 +20,6 @@
                     <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
                     </c:when>
                 </c:choose>
-            <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
         </ul>
     </div>
 </nav>
@@ -50,10 +49,10 @@
                     <div class="col s1 offset-s1 center-align">
                         <i class="large material-icons">person</i>
                     </div>
-                    <div class="col s3">                        
+                    <div class="col s3 offset-s1">                        
                         <h4 class="card-title grey-text text-darken-4">${usuario.nombre}</h4>                  
                     </div>
-                    <div class="col s2 offset-s2 center-align">
+                    <div class="col s2 offset-s1 center-align">
                         <h4 class="card-title grey-text text-darken-4">${usuario.valoracionesTotales}</h4>
                         <p class="medium-small grey-text">Valoraciones realizadas</p>                        
                     </div>
@@ -73,7 +72,7 @@
         <!-- profile-page-content -->
         <div id="profile-page-content" class="row">
             <!-- profile-page-sidebar-->
-            <div id="profile-page-sidebar" class="col s6 m4">
+            <div id="profile-page-sidebar" class="col s12 m4">
                 <!-- Profile About  -->
                 <div class="card light-blue">
                     <div class="card-content white-text">
@@ -117,20 +116,17 @@
                                         <label for="direccion">Direccion</label>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                            <button class="btn cyan waves-effect waves-light right" type="submit">Actualizar
-                                                <i class="mdi-content-send right"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <button class="btn cyan waves-effect waves-light right" type="submit">Actualizar
+                            <i class="mdi-content-send right"></i>
+                        </button>
+                    </div>
+                </div>
+                </form>
             </div>
         </div>
     </div>

@@ -19,14 +19,14 @@
             <div class="row"></div>
             <div class="row"></div>
             <div class="row">
-                <div class="col s12 m4 offset-m4">
+                <div class="col s12 m6 offset-m3 l4 offset-l4">
                     <div class="card">
                         <div class="card-content">
                             <div class="row">
                                 <div class="input-field col s12 center">
-                                    <img src="img/logo.png"
-                                         alt="" width="50%"
-                                         class="circle responsive-img valign profile-image-login">
+                                    <img src="img/new_logo.png"
+                                         alt="" width="70%"
+                                         class="responsive-img valign profile-image-login">
                                 </div>
                             </div>
                             <form action="login" method="post">

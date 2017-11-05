@@ -13,7 +13,7 @@
     <div class="nav-wrapper">
         <a href="#" class="brand-logo center"></a><a href="#"
                                                      data-activates="mobile-demo" class="button-collapse"><i
-                class="material-icons">Menú</i></a>
+                class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <c:choose>
                 <c:when test="${rol=='Consumidor'}">
@@ -29,7 +29,6 @@
                     <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
                     </c:when>
                 </c:choose>
-            <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
         </ul>
     </div>
 </nav>
@@ -54,7 +53,7 @@
                             <div class="col s6">
                                 <span>Fecha emisión: ${element.fechaEmision}</span>
                             </div>
-                            <div class="col s2 offset-s1 offset-m2 offset-l3">
+                            <div class="col s2 offset-m2 offset-l3">
                                 <a class="waves-effect waves-light btn right-align" href="${pageContext.request.contextPath}/certificados?action=get?id=${element.idCertificado}">Descargar</a>
                             </div>
                         </div>

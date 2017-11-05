@@ -4,7 +4,7 @@
     <div class="nav-wrapper">
         <a href="#" class="brand-logo center"></a><a href="#"
                                                      data-activates="mobile-demo" class="button-collapse"><i
-                class="material-icons">Menú</i></a>
+                class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <c:choose>
                 <c:when test="${rol=='Consumidor'}">
@@ -31,7 +31,7 @@
     <a href="${pageContext.request.contextPath}/valoraciones?id=${oferta.idOferta}"  class="btn pulse" value="Ver valoraciones">Ver valoraciones</a>
     <div class="row">
 
-        <div class="col  s6 m6">
+        <div class="col  s12 m6">
             <!-- profile-page-header -->
             <div  class="card">
                 <!--<figure class="card-profile-image">
@@ -91,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <div class="col  s6 m6">
+        <div class="col  s12 m6">
             <div  class="card">
                 <div class="card-content">
                     <span class="card-title">Información de la oferta</span>
