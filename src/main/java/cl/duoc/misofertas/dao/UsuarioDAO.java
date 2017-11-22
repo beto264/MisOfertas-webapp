@@ -12,7 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import oracle.jdbc.OracleTypes;
 
 
@@ -28,6 +30,30 @@ import oracle.jdbc.OracleTypes;
 public final class UsuarioDAO {
 
     private final Connection con = new DBConnection().connect();
+    
+    public List<UsuarioDTO> getAll() throws SQLException {
+
+        Connection con = new DBConnection().connect();
+
+        String sp = "{call get_usuarios(?)}";
+
+        CallableStatement cs = con.prepareCall(sp);
+        cs.registerOutParameter(1, OracleTypes.CURSOR);
+
+        cs.executeUpdate();
+
+        ResultSet rs = rs = (ResultSet) cs.getObject(1);
+
+        List<UsuarioDTO> usuarios = new ArrayList<>();
+
+        while (rs.next()) {
+            UsuarioDTO usuarioDTO = new UsuarioDTO();
+            usuarioDTO.setRol(rs.getString("rol"));
+            usuarios.add(usuarioDTO);
+        }
+        
+        return usuarios;
+    }
 
     public boolean validUser(UsuarioDTO usuario) throws SQLException {
 

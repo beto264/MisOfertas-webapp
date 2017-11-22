@@ -2,8 +2,8 @@
 
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo center"></a><a href="#"
-                                                     data-activates="mobile-demo" class="button-collapse"><i
+        <a href="#" class="brand-logo center"><img src="img/logo_fondo_blanco.png" width="82%"></a><a href="#"
+                                                                                                      data-activates="mobile-demo" class="button-collapse"><i
                 class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <c:choose>
@@ -20,6 +20,7 @@
                     <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
                     </c:when>
                 </c:choose>
+            <li><a href="${pageContext.request.contextPath}/logout">Salir</a></li>
         </ul>
     </div>
 </nav>
@@ -130,13 +131,25 @@
                 <c:otherwise>
                     <div class="row"></div>
                     <div class="row"></div>
-                    <div class="row">
-                        <a class="waves-effect waves-light btn"><i class="material-icons left"></i>Descargar reporte</a>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col s6">
+                                    <a class="waves-effect waves-light btn right-align" href="${pageContext.request.contextPath}/reporte">Descarga reporte</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </c:otherwise>
             </c:choose>
         </div>
     </div>
 </div>
-<%@ include file="layout/footer.jsp" %>
+<c:choose>
+    <c:when test="${rol=='Consumidor'}">
+        <%@ include file="layout/footer.jsp" %>
+    </c:when>
+</c:choose>
+
+
 

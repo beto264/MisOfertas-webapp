@@ -11,11 +11,20 @@ package cl.duoc.misofertas.dto;
  */
 public class TiendaDTO {
     
+    private String idTienda;
     private String nombre;
     private String direccion;
     private String numero;
     private Double latitud;
     private Double longitud;
+    
+     public String getIdtienda() {
+        return idTienda;
+    }
+
+    public void setIdTienda(String idTienda) {
+        this.idTienda = idTienda;
+    }
 
     public String getDireccion() {
         return direccion;

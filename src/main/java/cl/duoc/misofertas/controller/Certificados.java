@@ -84,22 +84,25 @@ public class Certificados extends HttpServlet {
 
                     descuentos = descuentoDAO.getDescuentosByPuntos(user.getPuntosAcumulados());
 
-                    CertificadoDTO certificadoDTO = new CertificadoDTO();
-                    certificadoDTO.setRut(usuarioDTO.getRut());
-
-                    //codigo de barra:
-                    //3 utimos digitos del rut
-                    //id certificado
-                    //fecha completa
-                    long codigoBarra = crearCodigoBarra(usuarioDTO, certificadoDTO);
-                    certificadoDTO.setCodigoBarra(codigoBarra);
-
+                     CertificadoDTO certificadoDTO = null;
+                    
                     for (DescuentoDTO descuento : descuentos) {
+                        certificadoDTO = new CertificadoDTO();
+                        certificadoDTO.setRut(usuarioDTO.getRut());
+
+                        //codigo de barra:
+                        //3 utimos digitos del rut
+                        //id certificado
+                        //fecha completa
+                        long codigoBarra = crearCodigoBarra(usuarioDTO, certificadoDTO);
+                        certificadoDTO.setCodigoBarra(codigoBarra);
                         //agregamos los descuentos al certificado
                         certificadoDTO.setDescuento(descuento);
-                        certificadoDAO.addCertificado(certificadoDTO);
+                       
 
                     }
+                    
+                     certificadoDAO.addCertificado(certificadoDTO);
 
                 } catch (SQLException ex) {
                     Logger.getLogger(Certificados.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,7 +113,7 @@ public class Certificados extends HttpServlet {
             } else {
                 request.setAttribute("cupon", null);
             }
-                    request.getRequestDispatcher("perfil").forward(request, response);
+            request.getRequestDispatcher("perfil").forward(request, response);
         } else if (request.getParameter("action").equalsIgnoreCase("list")) {
             UsuarioDTO user = new UsuarioDTO();
             try {
@@ -126,14 +129,11 @@ public class Certificados extends HttpServlet {
         } else if (request.getParameter("action").equalsIgnoreCase("get")) {
             String rut = usuarioDTO.getRut();
             String idCertificado = request.getParameter("id");
-            
+
             //con estos 2 datos podemos generar el reporte
-            
-            
-            
             request.getRequestDispatcher("home").forward(request, response);
-            
-        }else{
+
+        } else {
             request.getRequestDispatcher("cupones.jsp").forward(request, response);
         }
     }

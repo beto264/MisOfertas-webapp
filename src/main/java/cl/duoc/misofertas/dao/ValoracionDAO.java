@@ -72,5 +72,27 @@ public class ValoracionDAO {
         }
         return valoraciones;
     }
+    
+     public int getValoracionesTienda(String idTienda) throws SQLException {
+        Connection con = new DBConnection().connect();
+
+        String sp = "{call get_valoraciones_tienda(?, ?)}";
+
+        CallableStatement cs = con.prepareCall(sp);
+        cs.setString(1, idTienda);
+        cs.registerOutParameter(2, OracleTypes.CURSOR);
+
+        cs.executeUpdate();
+
+        ResultSet rs = rs = (ResultSet) cs.getObject(2);
+
+        int valoraciones = 0;
+
+        while (rs.next()) {
+            valoraciones = Integer.valueOf(rs.getString("valoraciones"));
+
+        }
+        return valoraciones;
+    }
 
 }

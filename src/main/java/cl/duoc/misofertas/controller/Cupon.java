@@ -6,7 +6,12 @@
 package cl.duoc.misofertas.controller;
 
 import cl.duoc.misofertas.dao.CertificadoDAO;
+import cl.duoc.misofertas.dao.TiendaDAO;
+import cl.duoc.misofertas.dao.UsuarioDAO;
+import cl.duoc.misofertas.dao.ValoracionDAO;
 import cl.duoc.misofertas.dto.CertificadoDTO;
+import cl.duoc.misofertas.dto.TiendaDTO;
+import cl.duoc.misofertas.dto.UsuarioDTO;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -25,11 +30,19 @@ import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.List;
 import com.itextpdf.text.ListItem;
+import com.itextpdf.text.pdf.DefaultFontMapper;
+import com.itextpdf.text.pdf.FontMapper;
+import com.itextpdf.text.pdf.PdfGraphics2D;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPrinterGraphics2D;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -44,6 +57,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -87,6 +108,8 @@ public class Cupon extends HttpServlet {
             String categoria = certificado.getDescuento().getRubro().getNombre();
             String tope = certificado.getDescuento().getTope();
 
+            //este metodo estaba descomentado y todo lo de abajo comentado
+            //generarGraficos(response);
             response.setContentType("application/pdf");
 
             OutputStream outputStream = response.getOutputStream();
@@ -128,7 +151,7 @@ public class Cupon extends HttpServlet {
 
             document.add(new Phrase("\n"));
 
-            document.add(new Paragraph("Hasta el momento tienes " + puntosAcumulados + " puntos acumulados.  Con este puntaje puedes acceder a realizar compras en las siguientes categorias:"));
+            document.add(new Paragraph("Hasta el momento tiene " + puntosAcumulados + " puntos acumulados.  Con este puntaje puedes acceder a realizar compras en las siguientes categorias:"));
 
             document.add(new Phrase("\n"));
 
@@ -164,6 +187,35 @@ public class Cupon extends HttpServlet {
             listCondiciones.add(fourItem);
             document.add(listCondiciones);
 
+//            DefaultCategoryDataset mychartData = new DefaultCategoryDataset();
+//            mychartData.setValue(90, "Marks", "English");
+//            /* Specify Values for 2D Chart */
+//            mychartData.setValue(78, "Marks", "Maths");
+//            /* Specify X Axis and Y Axis Values for Chart */
+//            mychartData.setValue(40, "Marks", "Science");
+//            mychartData.setValue(89, "Marks", "History");
+//            /* We now create a bar chart using the ChartFactory object's createBarChart Method, and pass the values gathered earlier*/
+// /* This method returns a JFreeChart object back to us */
+// /* We specify the chart title, X-Axis Title and Y-Axis heading in this method */
+//            JFreeChart my2DChart = ChartFactory.createBarChart("Mark Details", "Subject", "Marks", mychartData, PlotOrientation.VERTICAL, false, true, false);
+//            /* 2D Chart created till this point, this can be moved into iText PDF */
+//            int width = 640;
+//            /* Width of our chart */
+//            int height = 480;
+//            /* Height of our chart */
+//
+//            PdfTemplate template_Chart_Holder = cb.createTemplate(width, height);
+//            /* Create a 2D graphics object to write on the template */
+//            Graphics2D Graphics_Chart = template_Chart_Holder.createGraphics(width, height, new DefaultFontMapper());
+//            /* Create a Rectangle object */
+//            Rectangle2D Chart_Region = new Rectangle2D.Double(0, 0, 540, 380);
+//            /* Invoke the draw method passing the Graphics and Rectangle 2D object to draw the chart */
+//            my2DChart.draw(Graphics_Chart, Chart_Region);
+//            Graphics_Chart.dispose();
+//            /* Add template to PdfContentByte and then to the PDF document */
+//            cb.addTemplate(template_Chart_Holder, 0, 0);
+//            /* Close the Document, writer will create a beautiful 2D chart inside the PDF document */
+
             document.close();
 
         } catch (DocumentException ex) {
@@ -175,6 +227,8 @@ public class Cupon extends HttpServlet {
         }
 
     }
+
+    
 
     private void PlaceChunck(PdfWriter writer, String text, int x, int y) throws DocumentException, IOException {
         PdfContentByte cb = writer.getDirectContent();
